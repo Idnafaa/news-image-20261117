@@ -1,4 +1,4 @@
-"""news-image-20261117 v3 entry program (Python 3.13, stdlib only).
+"""news-image-20261117 v4 entry program (Python 3.13, stdlib only).
 
 Copies the poster held in this repository to the harness output
 directory as entry.png. No network, no clock, no randomness: the
@@ -9,9 +9,9 @@ import os
 import shutil
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-DEST = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")) / "entry.png"
+SRC = Path(__file__).resolve().parent / "entry.png"
+OUT = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")) / "entry.png"
 
-DEST.parent.mkdir(parents=True, exist_ok=True)
-shutil.copyfile(HERE / "entry.png", DEST)
-print("wrote", DEST)
+OUT.parent.mkdir(parents=True, exist_ok=True)
+shutil.copyfile(SRC, OUT)
+print("wrote", OUT)
