@@ -1,22 +1,17 @@
-"""news-image-20261117 v2 entry program (Python 3.13, stdlib only).
+"""news-image-20261117 v3 entry program (Python 3.13, stdlib only).
 
-Writes the poster stored in this repository to /output/entry.png
-(or $MAKEFUN_OUTPUT_DIR/entry.png when the harness sets it).
-No network, no clock, no randomness: every run copies the same
-bytes, so two runs are byte-identical.
+Copies the poster held in this repository to the harness output
+directory as entry.png. No network, no clock, no randomness: the
+bytes copied are always the same, so repeated runs are identical.
+The harness may set MAKEFUN_OUTPUT_DIR; otherwise /output is used.
 """
 import os
 import shutil
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent
-OUT_DIR = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output"))
+HERE = Path(__file__).resolve().parent
+DEST = Path(os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")) / "entry.png"
 
-
-def main():
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(REPO / "entry.png", OUT_DIR / "entry.png")
-
-
-if __name__ == "__main__":
-    main()
+DEST.parent.mkdir(parents=True, exist_ok=True)
+shutil.copyfile(HERE / "entry.png", DEST)
+print("wrote", DEST)
